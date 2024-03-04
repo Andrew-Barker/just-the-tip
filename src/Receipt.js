@@ -1,13 +1,21 @@
+import LocationComponent from './Location';
+import React, { useState } from 'react';
 
 const Receipt = () => {
+  const [selectedTipMin, setSelectedTipMin] = useState('18');
+
+  const handleTipMinChange = (event) => {
+    setSelectedTipMin(event.target.value);
+  };
+
     return (
     <div className="grid max-w-md gap-4 p-4 mx-auto border border-gray-200 rounded-lg bg-white shadow-xl md:max-w-2xl md:p-8 md:gap-8">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-center gap-4">
         <img
           alt="Logo"
           className="rounded-md"
           height="64"
-          src="/jtt_logo.jpeg"
+          src="/logo.jpeg"
           style={{
             aspectRatio: "64/64",
             objectFit: "cover",
@@ -23,17 +31,18 @@ const Receipt = () => {
           </address>
         </div>
       </div>
-      <div className="flex items-center justify-center border-t border-b py-4">
+      <div className="flex items-center justify-center text-center border-t border-b py-4">
         <div className="text-sm">
           <div className="font-semibold">Receipt #01234</div>
-          <div>location</div>
+          {/*<div>location</div>*/}
+          <LocationComponent></LocationComponent>
           <div>{new Date().toLocaleString()}</div>
         </div>
       </div>
       <div className="grid gap-2">
         <div className="flex items-center justify-between">
           <div>Desired Tip Minimum</div>
-          <select className="w-24 min-w-24 text-right border border-gray-300 rounded-mds">
+          <select className="w-24 min-w-24 text-right border border-gray-300 rounded-mds" value={selectedTipMin} onChange={handleTipMinChange}>
             <option value="5">5%</option>
             <option value="10">10%</option>
             <option value="15">15%</option>
@@ -56,7 +65,7 @@ const Receipt = () => {
         <div className="flex items-center">
           <div className="flex items-center bg-white border border-gray-300 rounded-md">
             <span className="text-gray-500 pl-2">$</span>
-            <input className="w-24 min-w-24 text-right outline-none pl-1 pr-2" type="number" value="1369.00" />
+            <input className="w-24 min-w-24 text-right outline-none pl-1 pr-2" type="number" min="0" placeholder="Bill Subtotal" value="1369.00" />
           </div>
         </div>
       </div>
