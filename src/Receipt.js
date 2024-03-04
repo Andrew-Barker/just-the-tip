@@ -1,12 +1,43 @@
 import LocationComponent from './Location';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Receipt = () => {
   const [selectedTipMin, setSelectedTipMin] = useState('18');
+  const [data, setData] = useState({minTip: '18', subTotal: null});
+  const [results, setResults] = useState({
+    finalBillTotal: 0,
+    finalTipAmount: 0,
+    finalTipPercent: 0,
+  });
 
   const handleTipMinChange = (event) => {
-    setSelectedTipMin(event.target.value);
+    setData(prevState => ({...prevState, minTip: event.target.value}));
   };
+
+  const handleSubtotalChange = (event) => {
+    let value = event.target.value;
+
+    // Check if the value contains more than two decimal places
+    const regex = /^\d+(\.\d{0,2})?$/;
+    if (value === '' || regex.test(value)) {
+      setData(prevState => ({...prevState, subTotal: event.target.value}));
+    }
+  };
+
+  useEffect(() => {
+    const subTotal = Number(data.subTotal); // Ensure this is a number
+    const minTipPercent = Number(data.minTip); // Convert to number in case it's coming from a select option as a string
+
+    const finalBillTotal = Math.ceil(subTotal + subTotal * (minTipPercent / 100));
+    const finalTipAmount = Number(finalBillTotal - subTotal).toFixed(2); // This will be a string, but that's okay for display
+    const finalTipPercent = (Number(finalTipAmount) / subTotal) * 100;
+
+    setResults({
+      finalBillTotal,
+      finalTipAmount,
+      finalTipPercent: subTotal ? finalTipPercent.toFixed(2) : Number(0).toFixed(2), // Convert to fixed decimal place for display
+    });
+    }, [data]);
 
     return (
     <div className="grid max-w-md gap-4 p-4 mx-auto border border-gray-200 rounded-lg bg-white shadow-xl md:max-w-2xl md:p-8 md:gap-8">
@@ -42,7 +73,7 @@ const Receipt = () => {
       <div className="grid gap-2">
         <div className="flex items-center justify-between">
           <div>Desired Tip Minimum</div>
-          <select className="w-24 min-w-24 text-right border border-gray-300 rounded-mds" value={selectedTipMin} onChange={handleTipMinChange}>
+          <select className="w-24 min-w-24 text-right border border-gray-300 rounded-mds" value={data.minTip} onChange={handleTipMinChange}>
             <option value="5">5%</option>
             <option value="10">10%</option>
             <option value="15">15%</option>
@@ -65,7 +96,7 @@ const Receipt = () => {
         <div className="flex items-center">
           <div className="flex items-center bg-white border border-gray-300 rounded-md">
             <span className="text-gray-500 pl-2">$</span>
-            <input className="w-24 min-w-24 text-right outline-none pl-1 pr-2" type="number" min="0" placeholder="Bill Subtotal" value="1369.00" />
+            <input className="w-24 min-w-24 text-right outline-none pl-1 pr-2" type="number" min="0" placeholder="Bill subtotal" value={data.subTotal} onChange={handleSubtotalChange}/>
           </div>
         </div>
       </div>
@@ -80,15 +111,15 @@ const Receipt = () => {
       <div className="border-t border-gray-200 dark:border-gray-800" />
       <div className="flex items-center font-medium pt-6">
         <div>Tip Percentage</div>
-        <div className="ml-auto">18.18%</div>
+        <div className="ml-auto">{results.finalTipPercent}%</div>
       </div>
       <div className="flex items-center font-medium py-2">
         <div>Tip Amount</div>
-        <div className="ml-auto">$4.20</div>
+        <div className="ml-auto">${results.finalTipAmount}</div>
       </div>
       <div className="flex items-center font-medium pb-8">
         <div>Total</div>
-        <div className="ml-auto">$150.00</div>
+        <div className="ml-auto">${results.finalBillTotal}</div>
       </div>
       <div className="flex items-start gap-4 text-sm">
         <div className="grid gap-1">
