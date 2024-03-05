@@ -27,10 +27,12 @@ const Receipt = () => {
   };
 
   const handleQuestionnaireSubmit = (answers) => {
-    console.log('the ansswers', answers)
     // Calculate the average tip based on answers
-    const averageTip = (answers.reduce((acc, curr) => acc + curr, 0) / answers.length)*100;
-    console.log('averageTip',averageTip)
+    // Filter out null answers and calculate the average based on responses provided
+    const filteredAnswers = answers.filter(answer => answer != null);
+    const averageTip = filteredAnswers.length > 0
+        ? (filteredAnswers.reduce((acc, curr) => acc + curr, 0) / filteredAnswers.length) * 100
+        : 18; // Default to 18 or another default value if no answers were provided
     setData(prevState => ({...prevState, minTip: averageTip.toFixed(2)}));
     setAverageTipFromQuestions(averageTip.toFixed(2))
     setShowQuestionnaire(false); // Hide questionnaire after submission
