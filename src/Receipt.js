@@ -80,7 +80,7 @@ const Receipt = () => {
       </div>
       <div className="flex items-center justify-center text-center border-t border-b py-4">
         <div className="text-sm">
-          <div className="font-semibold">Receipt #01234</div>
+          <div className="font-semibold">Receipt #80085</div>
           {/*<div>location</div>*/}
           <LocationComponent></LocationComponent>
           <div>{new Date().toLocaleString()}</div>
@@ -147,10 +147,9 @@ const Receipt = () => {
           <div>Thank you for using Just The Tip!</div>
           <div>Have a great day!</div>
         </div>
-        <div className="grid gap-1 justify-items-end">
-          <div>Just The Tip</div>
-          <div>69 Gratuity Grove</div>
-          <div>Tipville, OH 42069</div>
+        <div className="grid gap-1 justify-items-end text-[9px]">
+          <div>NULL__P01NT3R presents</div>
+          <div><span className="underline">Just The Tip</span> © {new Date().getFullYear()}</div>
         </div>
       </div>
     </div>
