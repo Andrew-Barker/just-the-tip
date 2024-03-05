@@ -110,7 +110,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                 </div>
                 )}
               {question.type === 'rating' && (
-                <div className="flex space-x-4 justify-start">
+                <div className="flex space-x-4 justify-between">
                   {[1, 2, 3, 4, 5].map((rating) => (
                     <label key={rating} className="inline-flex items-center">
                       <input
@@ -127,7 +127,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                 </div>
                 )}
               {question.type === 'multiple_choice' && (
-                <div className="flex flex-wrap items-center justify-start space-x-4">
+                <div className={`grid grid-cols-2 md:grid-cols-${question.options.length > 4 ? 4 : question.options.length} gap-4`}>
                   {question.options.map((option, optionIndex) => (
                     <label key={optionIndex} className="inline-flex items-center">
                       <input
