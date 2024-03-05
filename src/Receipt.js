@@ -1,14 +1,16 @@
 import LocationComponent from './Location';
+import Questionnaire from './Questionnaire';
 import React, { useState, useEffect } from 'react';
 
 const Receipt = () => {
-  const [selectedTipMin, setSelectedTipMin] = useState('18');
+  const [averageTipFromQuestions, setAverageTipFromQuestions] = useState(null);
   const [data, setData] = useState({minTip: '18', subTotal: null});
   const [results, setResults] = useState({
     finalBillTotal: 0,
     finalTipAmount: 0,
     finalTipPercent: 0,
   });
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 
   const handleTipMinChange = (event) => {
     setData(prevState => ({...prevState, minTip: event.target.value}));
@@ -24,9 +26,21 @@ const Receipt = () => {
     }
   };
 
+  const handleQuestionnaireSubmit = (answers) => {
+    console.log('the ansswers', answers)
+    // Calculate the average tip based on answers
+    const averageTip = (answers.reduce((acc, curr) => acc + curr, 0) / answers.length)*100;
+    console.log('averageTip',averageTip)
+    setData(prevState => ({...prevState, minTip: averageTip.toFixed(2)}));
+    setAverageTipFromQuestions(averageTip.toFixed(2))
+    setShowQuestionnaire(false); // Hide questionnaire after submission
+  };
+
+
   useEffect(() => {
+    console.log('calc the percent');
     const subTotal = Number(data.subTotal); // Ensure this is a number
-    const minTipPercent = Number(data.minTip); // Convert to number in case it's coming from a select option as a string
+    let minTipPercent = Number(data.minTip); // Convert to number in case it's coming from a select option as a string
 
     const finalBillTotal = Math.ceil(subTotal + subTotal * (minTipPercent / 100));
     const finalTipAmount = Number(finalBillTotal - subTotal).toFixed(2); // This will be a string, but that's okay for display
@@ -37,7 +51,8 @@ const Receipt = () => {
       finalTipAmount,
       finalTipPercent: subTotal ? finalTipPercent.toFixed(2) : Number(0).toFixed(2), // Convert to fixed decimal place for display
     });
-    }, [data]);
+    }, [data]); // Add averageTipFromQuestions as a dependency
+
 
     return (
     <div className="grid max-w-md gap-4 p-4 mx-auto border border-gray-200 rounded-lg bg-white shadow-xl md:max-w-2xl md:p-8 md:gap-8">
@@ -81,14 +96,16 @@ const Receipt = () => {
             <option value="20">20%</option>
             <option value="22">22%</option>
             <option value="25">25%</option>
+            {averageTipFromQuestions && <option value={averageTipFromQuestions}>{averageTipFromQuestions}%</option>}
           </select>
         </div>
       </div>
       <div className="flex items-center justify-start text-xs">
         <div>
-          <button className="flex items-center text-blue-500 hover:underline">
+          <button onClick={() => setShowQuestionnaire(true)} className="flex items-center text-blue-500 hover:underline">
             Need Help Deciding Tip Percent?
           </button>
+          {showQuestionnaire && <Questionnaire onSubmit={handleQuestionnaireSubmit} onClose={() => setShowQuestionnaire(false)}/>}
         </div>
       </div>
       <div className="flex items-center justify-between pt-4">
