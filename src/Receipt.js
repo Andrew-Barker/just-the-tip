@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const Receipt = () => {
   const [averageTipFromQuestions, setAverageTipFromQuestions] = useState(null);
-  const [data, setData] = useState({minTip: '18', subTotal: null});
+  const [data, setData] = useState({minTip: '18', subTotal: ''});
   const [results, setResults] = useState({
     finalBillTotal: 0,
     finalTipAmount: 0,
@@ -40,7 +40,6 @@ const Receipt = () => {
 
 
   useEffect(() => {
-    console.log('calc the percent');
     const subTotal = Number(data.subTotal); // Ensure this is a number
     let minTipPercent = Number(data.minTip); // Convert to number in case it's coming from a select option as a string
 
@@ -120,13 +119,16 @@ const Receipt = () => {
         </div>
       </div>
       <div className="flex items-center justify-end text-xs">
-        <div>
-          <button className="flex items-center text-blue-500 hover:underline">
-            Upload Receipt
-            <UploadIcon className="ml-2 h-4 w-4" />
-          </button>
-        </div>
+        {process.env.REACT_APP_FEATURE_UPLOAD === 'true' && (
+          <div>
+            <button className="flex items-center text-blue-500 hover:underline">
+              Upload Receipt
+              <UploadIcon className="ml-2 h-4 w-4" />
+            </button>
+          </div>
+          )}
       </div>
+      
       <div className="border-t border-gray-200 dark:border-gray-800" />
       <div className="flex items-center font-medium pt-6">
         <div>Tip Percentage</div>
