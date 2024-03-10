@@ -30,12 +30,15 @@ code {
 /* Add this at the end of your global CSS file */
 .receipt-article {
   background: white;
-  width: 25rem; /* Adjust based on your component's width, or keep it responsive */
+  width: 25rem; /* Adjust based on your component's width */
   padding: 20px;
   position: relative;
   margin: 0 auto; /* Centering the receipt */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for depth */
+  /* Remove or comment out the next line if you don't want the rectangular shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds depth but is a regular shadow */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15)); /* Adds shadow that follows SVG shape */
 }
+
 
 .receipt-article::after {
   content: "";
@@ -48,3 +51,4 @@ code {
   background-size: 100%;
   background-repeat: no-repeat;
 }
+
