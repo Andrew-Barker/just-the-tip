@@ -45,12 +45,12 @@ const Receipt = () => {
     let minTipPercent = Number(data.minTip); // Convert to number in case it's coming from a select option as a string
 
     const finalBillTotal = Math.ceil(subTotal + subTotal * (minTipPercent / 100));
-    const finalTipAmount = Number(finalBillTotal - subTotal).toFixed(2); // This will be a string, but that's okay for display
+    const finalTipAmount = Number(finalBillTotal - subTotal);
     const finalTipPercent = (Number(finalTipAmount) / subTotal) * 100;
 
     setResults({
-      finalBillTotal,
-      finalTipAmount,
+      finalBillTotal: finalBillTotal.toLocaleString('en-US', { minimumFractionDigits: 0 }),
+      finalTipAmount: finalTipAmount.toLocaleString('en-US', { minimumFractionDigits: 2 }),
       finalTipPercent: subTotal ? finalTipPercent.toFixed(2) : Number(0).toFixed(2), // Convert to fixed decimal place for display
     });
     }, [data]); // Add averageTipFromQuestions as a dependency
@@ -115,7 +115,7 @@ const Receipt = () => {
         <div className="flex items-center">
           <div className="flex items-center bg-white border border-gray-300 rounded-md">
             <span className="text-gray-500 pl-2">$</span>
-            <input className="w-24 min-w-24 text-right outline-none pl-1 pr-2" type="number" min="0" placeholder="Bill subtotal" value={data.subTotal} onChange={handleSubtotalChange}/>
+            <input className="w-24 min-w-28 text-right outline-none pl-1 pr-2 rounded-md" type="number" min="0" placeholder="Bill subtotal" value={data.subTotal} onChange={handleSubtotalChange}/>
           </div>
         </div>
       </div>
