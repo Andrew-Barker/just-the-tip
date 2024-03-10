@@ -73,7 +73,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="relative bg-white p-6 rounded-lg w-11/12 max-w-4xl space-y-4">
-        <button onClick={onClose} className="absolute top-3 right-3 text-lg font-semibold text-gray-600 hover:text-gray-900">
+        <button onClick={onClose} className="absolute top-3 right-3 text-lg font-semibold text-brand-yellow-dark hover:text-brand-yellow-darker">
           &times; {/* This is the 'X' button */}
         </button>
         <form onSubmit={(e) => {
@@ -88,7 +88,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                   <label className="inline-flex items-center">
                     <input
                       type="radio"
-                      className="form-radio"
+                      className="form-radio radio-brand"
                       name={`question-${index}`}
                       value="Yes"
                       checked={answers[index] === 'Yes'}
@@ -99,7 +99,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                   <label className="inline-flex items-center">
                     <input
                       type="radio"
-                      className="form-radio"
+                      className="form-radio radio-brand"
                       name={`question-${index}`}
                       value="No"
                       checked={answers[index] === 'No'}
@@ -115,7 +115,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                     <label key={rating} className="inline-flex items-center">
                       <input
                         type="radio"
-                        className="form-radio"
+                        className="form-radio radio-brand"
                         name={`question-${index}`}
                         value={rating}
                         checked={answers[index] === rating}
@@ -132,7 +132,7 @@ const Questionnaire = ({ onSubmit, onClose }) => {
                     <label key={optionIndex} className="inline-flex items-center">
                       <input
                         type="radio"
-                        className="form-radio"
+                        className="form-radio radio-brand"
                         name={`question-${index}`}
                         value={option}
                         checked={answers[index] === option}
@@ -146,10 +146,10 @@ const Questionnaire = ({ onSubmit, onClose }) => {
             </div>
             ))}
           <div className="flex justify-end space-x-4">
-            <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded text-black">
+            <button type="button" onClick={onClose} className="px-4 py-2 bg-white hover:bg-red-500 rounded text-red-500 hover:text-white border border-red-500">
               Close
             </button>
-            <button type="submit" className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white">
+            <button type="submit" className="px-4 py-2 bg-brand-yellow-prominent hover:bg-brand-yellow-dark rounded text-white focus:ring-brand-yellow-dark">
               Submit Answers
             </button>
           </div>

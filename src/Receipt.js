@@ -1,5 +1,6 @@
 import LocationComponent from './Location';
 import Questionnaire from './Questionnaire';
+import ReceiptScanner from './ReceiptScanner'; // Ensure this path matches where your component is located
 import React, { useState, useEffect } from 'react';
 
 const Receipt = () => {
@@ -89,7 +90,7 @@ const Receipt = () => {
       <div className="grid gap-2">
         <div className="flex items-center justify-between">
           <div>Desired Tip Minimum</div>
-          <select className="w-24 min-w-24 text-right border border-gray-300 rounded-mds" value={data.minTip} onChange={handleTipMinChange}>
+          <select className="w-24 min-w-24 text-right bg-white border border-gray-300 rounded-md" value={data.minTip} onChange={handleTipMinChange}>
             <option value="5">5%</option>
             <option value="10">10%</option>
             <option value="15">15%</option>
@@ -103,7 +104,7 @@ const Receipt = () => {
       </div>
       <div className="flex items-center justify-start text-xs">
         <div>
-          <button onClick={() => setShowQuestionnaire(true)} className="flex items-center text-blue-500 hover:underline">
+          <button onClick={() => setShowQuestionnaire(true)} className="flex items-center text-brand-yellow-dark hover:text-brand-yellow-darker hover:underline">
             Need Help Deciding Tip Percent?
           </button>
           {showQuestionnaire && <Questionnaire onSubmit={handleQuestionnaireSubmit} onClose={() => setShowQuestionnaire(false)}/>}
@@ -121,14 +122,12 @@ const Receipt = () => {
       <div className="flex items-center justify-end text-xs">
         {process.env.REACT_APP_FEATURE_UPLOAD === 'true' && (
           <div>
-            <button className="flex items-center text-blue-500 hover:underline">
-              Upload Receipt
-              <UploadIcon className="ml-2 h-4 w-4" />
-            </button>
+            <ReceiptScanner />
           </div>
           )}
       </div>
       
+
       <div className="border-t border-gray-200 dark:border-gray-800" />
       <div className="flex items-center font-medium pt-6">
         <div>Tip Percentage</div>
@@ -153,27 +152,6 @@ const Receipt = () => {
         </div>
       </div>
     </div>
-    )
-}
-
-function UploadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="17 8 12 3 7 8" />
-      <line x1="12" x2="12" y1="3" y2="15" />
-    </svg>
     )
 }
 
