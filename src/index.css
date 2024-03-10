@@ -30,7 +30,7 @@ code {
 /* Add this at the end of your global CSS file */
 .receipt-article {
   background: white;
-  width: 24.33rem; /* Adjust based on your component's width */
+  width: 24rem; /* Adjust based on your component's width */
   padding: 20px;
   position: relative;
   margin: 0 auto; /* Centering the receipt */
