@@ -8,7 +8,7 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 
 clientsClaim();
 
-const CURRENT_CACHE_VERSION = 'v1.1.0'; // Increment this version for every update
+const CURRENT_CACHE_VERSION = 'v1.1.1'; // Increment this version for every update
 const PRECACHE_CACHE_NAME = `precache-${CURRENT_CACHE_VERSION}`;
 const IMAGES_CACHE_NAME = `images-${CURRENT_CACHE_VERSION}`;
 

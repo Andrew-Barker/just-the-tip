@@ -57,7 +57,7 @@ const Receipt = () => {
 
 
     return (
-    <div className="grid max-w-md gap-4 p-4 mx-auto border border-gray-200 rounded-lg bg-white shadow-xl md:max-w-2xl md:p-8 md:gap-8">
+      <article className="receipt-article grid max-w-md gap-4 p-4 mx-auto border border-gray-200 rounded-t-lg bg-white shadow-xl md:max-w-2xl md:p-8 md:gap-8">
       <div className="flex items-center justify-center gap-4">
         <img
           alt="Logo"
@@ -151,7 +151,7 @@ const Receipt = () => {
           <div><span className="underline">Just The Tip</span> © {new Date().getFullYear()}</div>
         </div>
       </div>
-    </div>
+    </article>
     )
 }
 
